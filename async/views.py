@@ -1,11 +1,23 @@
-import time
-from django.http import JsonResponse
+import asyncio
 
-def api(request):
-    time.sleep(1)
-    payload = {'message': 'Hello form Hamburg'}
+async def contador():
+    await asyncio.sleep(1)
+    print('A contagem comecou')
+    for num in range(1,15):
+        await asyncio.sleep(1)
+        tempo = num
+        print(num)
 
-    if 'task_id' in request.GET:
-        payload['task_id'] = request.GET['task_id']
-    return JsonResponse(payload)
+async def http_call_async():
+    asyncio.ensure_future(contador()) 
+    await asyncio.sleep(1)
+    print("olá Ebac!. A primeira funcao deu início")
+    await asyncio.sleep(9)
+    print("A primeira funcao está pronta")
+
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(http_call_async())
+
 
